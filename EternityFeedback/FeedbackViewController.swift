@@ -10,13 +10,11 @@ import UIKit
 
 class FeedbackViewController: UIViewController, UITextViewDelegate {
     
-    private let botToken = "BOT_TOKEN"
-    private let chatID = "CHAT_ID"
-    private let urlString = "https://api.telegram.org"
+    private let apiClient = APIClient()
     
-    let descriptionLabel = UILabel()
+    private let descriptionLabel = UILabel()
     
-    let nameTextField: UITextField = {
+    private let nameTextField: UITextField = {
         let nameTextField = UITextField()
         nameTextField.placeholder = "Enter your name"
         nameTextField.font = .systemFont(ofSize: 18)
@@ -24,7 +22,7 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
         return nameTextField
     }()
     
-    let emailTextField: UITextField = {
+    private let emailTextField: UITextField = {
         let emailTextField = UITextField()
         emailTextField.keyboardType = .emailAddress
         emailTextField.placeholder = "Enter your email"
@@ -32,7 +30,7 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
         return emailTextField
     }()
     
-    let feedbackTextField: UITextField = {
+    private let feedbackTextField: UITextField = {
         let feedbackTextField = UITextField()
         feedbackTextField.placeholder = "Enter your feedback"
         feedbackTextField.font = .systemFont(ofSize: 18)
@@ -103,50 +101,31 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
     }
     
     @objc func submitButtonPressed() {
+        
         if feedbackTextField.text == "" || emailTextField.text == "" || nameTextField.text == "" {
             let alert = UIAlertController(title: "Alert", message: "Please fill all fields", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-        } else {
-            
-            let message = "Email: \(emailTextField.text!), Name: \(String(describing: nameTextField.text!)), Feedback: \(feedbackTextField.text!)"
-            let url = URL(string: "\(urlString)/bot\(botToken)/sendMessage?")!
-            
-            let params = ["chat_id": "\(chatID)", "text": "\(message)"]
-            
-            let session = URLSession.shared
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            
-            do {
-                request.httpBody = try JSONSerialization.data(withJSONObject: params, options: .prettyPrinted)
-            } catch let error    {
-                print(error.localizedDescription)
-            }
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            let task = session.dataTask(with: request as URLRequest, completionHandler: { data, response, error in
-                guard error == nil else {
-                    return
-                }
-                guard let data = data else {
-                    return
-                }
-                do {
-                    
-                    if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] {
-                        print("hello")
-                        print(json)
-                    }
-                } catch let error {
-                    print(error.localizedDescription)
-                }
-            })
-            task.resume()
-            
-            clearTextFields()
-            
+            return
         }
+        
+        /// set credentials
+        let botToken = "BOT_TOKEN"
+        let chatID = "CHAT_ID"
+        
+        let message = "Email: \(emailTextField.text!), Name: \(String(describing: nameTextField.text!)), Feedback: \(feedbackTextField.text!)"
+        let urlString = "https://api.telegram.org/bot\(botToken)/sendMessage?"
+        let params = ["chat_id": "\(chatID)", "text": "\(message)"]
+        
+        let request = apiClient.createRequest(url: urlString, method: "POST", params: params)
+        let data = request.flatMap { apiClient.sendRequest($0) }
+        
+        let dictResponse: Result<[String: Any], NetworkError> =  data.flatMap { apiClient.parseResponse(data: $0)
+        }
+        
+        print(dictResponse)
+        clearTextFields()
+
     }
     
     func clearTextFields() {
