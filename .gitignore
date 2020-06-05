@@ -1,0 +1,11 @@
+.DS_Store
+Podfile.lock
+Pods/
+EternityFeedback/.DS_Store
+EternityFeedback/Assets.xcassets/.DS_Store
+EternityFeedback/View/.DS_Store
+EternityFeedback.xcodeproj/project.xcworkspace/xcshareddata/
+EternityFeedback.xcodeproj/xcuserdata/
+EternityFeedback.xcodeproj/project.xcworkspace/xcuserdata/
+EternityFeedback.xcworkspace/xcshareddata/
+EternityFeedback.xcworkspace/xcuserdata/
