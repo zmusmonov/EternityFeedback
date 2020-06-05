@@ -15,48 +15,50 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
     private let urlString = "https://api.telegram.org"
     
     let descriptionLabel = UILabel()
-    let nameTextField = UITextField()
-    let emailTextField = UITextField()
-    let feedbackTextField = UITextField()
-    let submitButton = UIButton()
+    
+    let nameTextField: UITextField = {
+        let nameTextField = UITextField()
+        nameTextField.placeholder = "Enter your name"
+        nameTextField.font = .systemFont(ofSize: 18)
+        nameTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        return nameTextField
+    }()
+    
+    let emailTextField: UITextField = {
+        let emailTextField = UITextField()
+        emailTextField.keyboardType = .emailAddress
+        emailTextField.placeholder = "Enter your email"
+        emailTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        return emailTextField
+    }()
+    
+    let feedbackTextField: UITextField = {
+        let feedbackTextField = UITextField()
+        feedbackTextField.placeholder = "Enter your feedback"
+        feedbackTextField.font = .systemFont(ofSize: 18)
+        feedbackTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        return feedbackTextField
+    }()
+    
+    lazy var submitButton: UIButton = {
+        let submitButton = UIButton(type: .system)
+        submitButton.tintColor = .white
+        submitButton.backgroundColor = .systemBlue
+        submitButton.setTitle("Submit", for: .normal)
+        submitButton.addTarget(self, action: #selector(self.submitButtonPressed), for: .touchUpInside)
+        return submitButton
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         setupViews()
+        setViewConstraints()
     }
     
     func setupViews() {
-        
-        //description labell
-        descriptionLabel.text = "Please provide the information below and submit your feedback. We will contact you soon"
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.textAlignment = .center
-        
-        //email
-        emailTextField.keyboardType = .emailAddress
-        emailTextField.placeholder = "Enter your email"
-        emailTextField.borderStyle = UITextField.BorderStyle.roundedRect
-        
-        
-        //email
-        nameTextField.placeholder = "Enter your name"
-        nameTextField.font = .systemFont(ofSize: 18)
-        nameTextField.borderStyle = UITextField.BorderStyle.roundedRect
-        
-        
-        //email
-        feedbackTextField.placeholder = "Enter your feedback"
-        feedbackTextField.font = .systemFont(ofSize: 18)
-        feedbackTextField.borderStyle = UITextField.BorderStyle.roundedRect
-        
-        //button
-        submitButton.backgroundColor = .red
-        submitButton.setTitle("Submit", for: .normal)
-        submitButton.addTarget(self, action: #selector(self.submitButtonPressed), for: .touchUpInside)
-        
-        
         
         view.addSubview(descriptionLabel)
         view.addSubview(emailTextField)
@@ -64,7 +66,6 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
         view.addSubview(feedbackTextField)
         view.addSubview(submitButton)
         
-        setViewConstraints()
     }
     
     func setViewConstraints() {
