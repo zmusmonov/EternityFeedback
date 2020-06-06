@@ -9,8 +9,10 @@
 import UIKit
 
 class FeedbackViewController: UIViewController, UITextViewDelegate {
+
+    private let telegramService = TelegramService()
     
-    private let apiClient = APIClient()
+    //MARK:- UI Setup
     
     private let descriptionLabel = UILabel()
     
@@ -100,6 +102,8 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
         
     }
     
+    //MARK:- Business logic
+    
     @objc func submitButtonPressed() {
         
         if feedbackTextField.text == "" || emailTextField.text == "" || nameTextField.text == "" {
@@ -109,21 +113,11 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
             return
         }
         
-        /// set credentials
-        let botToken = "BOT_TOKEN"
-        let chatID = "CHAT_ID"
+        let text = "Email: \(emailTextField.text!), Name: \(String(describing: nameTextField.text!)), Feedback: \(feedbackTextField.text!)"
         
-        let message = "Email: \(emailTextField.text!), Name: \(String(describing: nameTextField.text!)), Feedback: \(feedbackTextField.text!)"
-        let urlString = "https://api.telegram.org/bot\(botToken)/sendMessage?"
-        let params = ["chat_id": "\(chatID)", "text": "\(message)"]
+        telegramService.sendMessage(text)
         
-        let request = apiClient.createRequest(url: urlString, method: "POST", params: params)
-        let data = request.flatMap { apiClient.sendRequest($0) }
         
-        let dictResponse: Result<[String: Any], NetworkError> =  data.flatMap { apiClient.parseResponse(data: $0)
-        }
-        
-        print(dictResponse)
         clearTextFields()
 
     }

@@ -75,7 +75,7 @@ struct APIClient {
         return result
     }
     
-    /// temporary method, probably better to use decodable
+    /// generic json data response
     func parseResponse(data: Data) -> Result<[String: Any], NetworkError> {
         
         guard let json = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any] else  {
@@ -86,6 +86,7 @@ struct APIClient {
         return .success(json)
     }
     
+    /// decodable data response
     func parseResponse<T: Decodable>(data: Data) -> Result<T, NetworkError> {
         
         guard let result = try? JSONDecoder().decode(T.self, from: data) else {
