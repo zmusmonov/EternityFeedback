@@ -12,6 +12,8 @@
 		AC543898245C311000817D37 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC543897245C311000817D37 /* Assets.xcassets */; };
 		AC54389B245C311000817D37 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC543899245C311000817D37 /* LaunchScreen.storyboard */; };
 		AC5438A3245C34C300817D37 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5438A2245C34C300817D37 /* FeedbackViewController.swift */; };
+		B78CD1A0248AC7630006F112 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78CD19F248AC7630006F112 /* ApiClient.swift */; };
+		B78CD1A2248BB8220006F112 /* TelegramService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78CD1A1248BB8220006F112 /* TelegramService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		AC54389A245C311000817D37 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AC54389C245C311000817D37 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC5438A2245C34C300817D37 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		B78CD19F248AC7630006F112 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		B78CD1A1248BB8220006F112 /* TelegramService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelegramService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,11 +61,21 @@
 				AC54388E245C310F00817D37 /* AppDelegate.swift */,
 				AC543890245C310F00817D37 /* SceneDelegate.swift */,
 				AC5438A2245C34C300817D37 /* FeedbackViewController.swift */,
+				B78CD1A3248BB9DB0006F112 /* Networking */,
 				AC543897245C311000817D37 /* Assets.xcassets */,
 				AC543899245C311000817D37 /* LaunchScreen.storyboard */,
 				AC54389C245C311000817D37 /* Info.plist */,
 			);
 			path = EternityFeedback;
+			sourceTree = "<group>";
+		};
+		B78CD1A3248BB9DB0006F112 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				B78CD19F248AC7630006F112 /* ApiClient.swift */,
+				B78CD1A1248BB8220006F112 /* TelegramService.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,8 +149,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC54388F245C310F00817D37 /* AppDelegate.swift in Sources */,
+				B78CD1A2248BB8220006F112 /* TelegramService.swift in Sources */,
 				AC5438A3245C34C300817D37 /* FeedbackViewController.swift in Sources */,
 				AC543891245C310F00817D37 /* SceneDelegate.swift in Sources */,
+				B78CD1A0248AC7630006F112 /* ApiClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
