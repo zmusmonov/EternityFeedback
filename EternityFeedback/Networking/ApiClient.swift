@@ -86,14 +86,4 @@ struct APIClient {
         return .success(json)
     }
     
-    /// decodable data response
-    func parseResponse<T: Decodable>(data: Data) -> Result<T, NetworkError> {
-        
-        guard let result = try? JSONDecoder().decode(T.self, from: data) else {
-            print(String(decoding: data, as: UTF8.self))
-            return .failure(.decoding)
-        }
-        
-        return .success(result)
-    }
 }

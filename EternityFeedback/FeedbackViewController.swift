@@ -102,7 +102,7 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
         
     }
     
-    //MARK:- Business logic
+    //MARK:- Action handling
     
     @objc func submitButtonPressed() {
         
@@ -115,8 +115,9 @@ class FeedbackViewController: UIViewController, UITextViewDelegate {
         
         let text = "Email: \(emailTextField.text!), Name: \(String(describing: nameTextField.text!)), Feedback: \(feedbackTextField.text!)"
         
-        telegramService.sendMessage(text)
-        
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.telegramService.sendMessage(text)
+        }
         
         clearTextFields()
 
